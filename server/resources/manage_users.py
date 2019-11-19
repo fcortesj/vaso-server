@@ -24,18 +24,23 @@ class Manage_Users(Resource):
         args = user_parser.parse_args()
 
         # We check if the username already exists in the db if not we add the new entry
-        user_list = mongo.db.Users.find()
-        if args['username'] not in user_list:
-            signed_user = {
-                            "name"    : args['name'],
-                            "age"     : args['age'],
-                            "city"    : args['city'],
-                            "address" : args['address'],
-                            "email"   : args['email'],
-                            "cel"     : args['cel'],
-                            "username": args['username'],
-                            "password": args['password']
+        # user_list = mongo.db.Users.find()
+        # if args['username'] not in user_list:
+        signed_user = {
+                            "name"    : str(args['name']),
+                            "age"     : str(args['age']),
+                            "city"    : str(args['city']),
+                            "address" : str(args['address']),
+                            "email"   : str(args['email']),
+                            "cel"     : str(args['cel']),
+                            "username": str(args['username']),
+                            "password": str(args['password'])
                           }
-            return str("Usuario") + str(args['username']) + str("Agregado!")
-        else:
-            return str("Usuario ya existente")
+
+        description = mongo.db.users
+        description.insert(signed_user)
+
+        return str("Usuario") + " " + str(args['username']) + " " + str(" Agregado!")
+
+        # else:
+        #     return str("Usuario ya existente")
