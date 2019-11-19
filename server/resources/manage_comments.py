@@ -12,17 +12,17 @@ class Comments(Resource):
         # Get Json object elements
         comment_parser = reqparse.RequestParser()
         comment_parser.add_argument('comment')
-        comment_parser.add_argument('products', action='append')
+        comment_parser.add_argument('id_product', action='append')
 
         args = comment_parser.parse_args()
         # Transfor it into an entry
-        for product in args['products']:
+        for id_product in args['id_product']:
             current_comment = {
-                                "product": str(product),
+                                "id_product": str(id_product),
                                 "comment": str(args['comment'])
                               }
             # We input the entry in the data base
             description = mongo.db.comments
             description.insert(current_comment)
             
-        return "Comments submitted Succesfully!"            
+        return 200            
