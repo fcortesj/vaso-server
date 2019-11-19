@@ -10,13 +10,15 @@ class Log_Users(Resource):
     def post(self):
         # First we create the parser of the elements involved
         log_user_parser = reqparse.RequestParser()
-        log_user_parser.add_argument("username")
-        log_user_parser.add_argument("password")
+        log_user_parser.add_argument('username')
+        log_user_parser.add_argument('password')
 
+        #We serach in the database for the user
         args = log_user_parser.parse_args()
-        current_query = mongo.db.Users.find({"$and": [{"Users": {'username': args['username']}}, 
-                                                  {"Users": {'password': args['password']}}
-                                                 ]
-                                        }
-                                       )
-        print(current_query)
+        current_query = list(mongo.db.users.find({ 'username' : str(args['username'])}, { 'password' : str(args['password'])}))
+
+        #Then if the user exists we return the username and the name if not we return an error
+        if not current_query:
+            return 409
+        else:
+            return { "username": str(args['username'])}

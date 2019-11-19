@@ -42,10 +42,9 @@ class Manage_Users(Resource):
             description = mongo.db.users
             description.insert(signed_user)
 
-            return { "username": str(args['username']) , "name": str(args['name']) }
+            return { "username": str(args['username'])}
 
         else:
-
             return 409
 
             
