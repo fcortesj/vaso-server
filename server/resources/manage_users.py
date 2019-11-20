@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from resources.imports import mongo 
+from flask import abort
 
 class Manage_Users(Resource):
     """ Class implemented to manage users (Sign In)"""
@@ -45,6 +46,6 @@ class Manage_Users(Resource):
             return { "username": str(args['username'])}
 
         else:
-            return 409
+            return abort(409)
 
             

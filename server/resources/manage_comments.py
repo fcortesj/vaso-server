@@ -12,13 +12,16 @@ class Comments(Resource):
         # Get Json object elements
         comment_parser = reqparse.RequestParser()
         comment_parser.add_argument('comment')
-        comment_parser.add_argument('id_product', action='append')
+        comment_parser.add_argument('id_product')
 
         args = comment_parser.parse_args()
+
+        products = args["id_product"][1:-1].split(',')
+
         # Transfor it into an entry
-        for id_product in args['id_product']:
+        for id_product in products:
             current_comment = {
-                                "id_product": str(id_product),
+                                "id_product": int(id_product.strip()),
                                 "comment": str(args['comment'])
                               }
             # We input the entry in the data base

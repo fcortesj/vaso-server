@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from resources.imports import mongo
+from flask import abort
 
 class Log_Users(Resource):
     """ 
@@ -19,6 +20,6 @@ class Log_Users(Resource):
 
         #Then if the user exists we return the username and the name if not we return an error
         if not current_query:
-            return 409
+            return abort(409)
         else:
             return { "username": str(args['username'])}
