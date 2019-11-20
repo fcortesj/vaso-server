@@ -14,4 +14,4 @@ api.add_resource(Comments, '/manage_comments')
 api.add_resource(Log_Users, '/log_users')
 
 if __name__=="__main__":
-    app.run(debug = True)
+    app.run(port=8080, host='0.0.0.0')
